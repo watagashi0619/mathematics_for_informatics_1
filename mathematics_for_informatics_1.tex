@@ -1,0 +1,1293 @@
+\documentclass[dvipdfmx,a4j,10pt]{jsarticle}
+\usepackage{amsthm}%定理環境
+\usepackage{newtxtext,newtxmath}%times font setting
+\usepackage{amsmath,amsfonts}%数式font setting
+\usepackage{mathrsfs}%花文字
+\usepackage{pxrubrica}%ルビ
+%\usepackage{lmodern}%font setting
+\usepackage{mathtools}%数式の相互参照部分にのみ式番号をふる
+\mathtoolsset{showonlyrefs,showmanualtags}
+\usepackage{empheq}%方程式
+\usepackage{physics}%物理系
+\usepackage{bm}%vector
+\usepackage{mleftright}%カッコ
+\usepackage{framed}%フレーム
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{booktabs}%表の上線\toprule中線下線\bottomrule
+\usepackage{url}%参考文献とかでurlをかくとき
+%\usepackage[dvipdfmx]{hyperref}%ハイパーリンク
+%\usepackage{comment}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins}%数式を「デコ」る
+\usepackage{tikz}
+\usetikzlibrary{cd}%矢印の図
+\usetikzlibrary{decorations,decorations.pathreplacing}%数式を「デコ」る
+\usepackage{bbm}
+\usepackage{ascmac}
+\usepackage{lscape}
+
+\usepackage{caption}
+\usepackage{boites}
+
+\usepackage{here}
+\usepackage{listings,jlisting}
+
+\lstset{
+    language=c,
+    frame=single,
+    basicstyle=\ttfamily\small,
+    commentstyle=\rmfamily\textit,
+    classoffset=1,
+    keywordstyle=\bfseries,
+    framesep=5pt,
+    showstringspaces=false,
+    numbers=left,
+    stepnumber=1,
+    lineskip=-0.2ex,
+    numberstyle=\tiny,
+    tabsize=2,
+    breaklines = true,
+    framexleftmargin=17pt,
+}
+
+\setcounter{secnumdepth}{4}%セクションの深さレベル
+
+\makeatletter%subsubsubsection定義
+    \newcommand{\subsubsubsection}{\@startsection{paragraph}{4}{\z@}%
+        {1.0\Cvs \@plus.5\Cdp \@minus.2\Cdp}%
+        {.1\Cvs \@plus.3\Cdp}%
+        {\reset@font\sffamily\normalsize}
+    }
+\makeatother
+
+%physicsでrotもcurlで使う
+\newcommand{\rot}{\curl}
+
+%amsthm style1,2 微分積分学B準拠
+\newtheoremstyle{mystyle1}% Name
+    {}% Space above
+    {}% Space below
+    {\normalfont}% Body font
+    {}% Indent amount
+    {\bfseries\sffamily}% Theorem head font
+    {\hspace{0.5em}}% Punctuation after theorem head
+    { }% Space after theorem head, ‘ ‘, or \newline
+    {\thmname{#1}\thmnumber{#2}\thmnote{（#3）\\}}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{mystyle1}
+\newtheorem{dfn}{定義}[section]
+\newtheorem{thm}[dfn]{定理}
+\newtheorem{axi}[dfn]{公理}
+\newtheorem{cor}[dfn]{系}
+\newtheorem{prop}[dfn]{命題}
+\newtheorem{lem}[dfn]{補題}
+\newtheorem{exs}[dfn]{例題}
+
+\newtheoremstyle{mystyle2}% Name
+    {}% Space above
+    {}% Space below
+    {\normalfont}% Body font
+    {}% Indent amount
+    {\bfseries\sffamily}% Theorem head font
+    {\hspace{0.5em}}% Punctuation after theorem head
+    { }% Space after theorem head, ‘ ‘, or \newline
+    {\thmname{#1}\thmnote{（#3）\\}}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{mystyle2}
+\newtheorem{dfn*}{定義}
+\newtheorem{thm*}{定理}
+\newtheorem{prop*}{命題}
+\newtheorem{ex}{例題}
+\newtheorem{example}{例}
+\newtheorem{qes}{問題}
+\newtheorem{note*}{注意}
+\newtheorem{ans}{解答}
+\newtheorem{note}{注意}
+\newtheorem{lem*}{補題}
+
+\newtheoremstyle{mystyle3}% Name
+    {}% Space above
+    {}% Space below
+    {\normalfont}% Body font
+    {}% Indent amount
+    {\bfseries\sffamily}% Theorem head font
+    {\hspace{0.5em}}% Punctuation after theorem head
+    { }% Space after theorem head, ‘ ‘, or \newline
+    {\thmname{#1}\thmnumber{#2}\thmnote{（#3）\\}}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{mystyle3}
+\newtheorem{qes*}[qes]{問題}
+
+%proofの後ろに黒四角をつける
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont
+  \topsep6\p@\@plus6\p@ \trivlist
+  \item[\hskip\labelsep{\bfseries\sffamily #1}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\renewcommand\proofname{証明}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\makeatother
+
+%ansの後ろに黒四角をつける
+\makeatletter
+\renewenvironment{ans}[1][解答]{\par
+  \pushQED{\qed}%
+  \normalfont
+  \topsep6\p@\@plus6\p@ \trivlist
+  \item[\hskip\labelsep{\bfseries\sffamily #1}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\renewcommand{\labelenumi}{\ensuremath{\blacksquare}}
+\makeatother
+
+%方程式番号にセクション番号を入れる
+\makeatletter
+\@addtoreset{equation}{section}
+\def\theequation{\thesection.\arabic{equation}}% renewcommand でもOK
+\makeatother
+
+\makeatletter
+\renewcommand{\thefigure}{% 図番号の付け方
+\thesection.\arabic{figure}}
+\@addtoreset{figure}{section}
+\makeatother
+
+%\renewcommand{\thepart}{\arabic{part}}
+%\renewcommand{\thenote}{}
+%\renewcommand{\thelem}{}
+
+%\makeatletter
+%\@addtoreset{section}{part}
+%\makeatother
+
+%\makeatletter
+%\def\blfootnote{\xdef\@thefnmark{}\@footnotetext}
+%\makeatother
+
+%\setcounter{tocdepth}{1}%目次をsectionまでの表示にする
+
+\newcommand{\blueunderline}[3][pos=0.5]{
+    \tcboxmath[
+        enhanced,
+        frame hidden, % 枠を消す
+        interior hidden, % 背景を消す
+        size=minimal, % 余白を消す
+        overlay={
+                \draw[
+                    blue,
+                    decorate
+                ] ([yshift=-4pt]frame.south west) -- ([yshift=-4pt]frame.south east)
+                node[#1,scale=0.8,below] {#3};
+            }
+    ]{#2}
+    }
+
+\renewcommand{\labelenumi}{(\arabic{enumi})}%enumerateのデフォルトを(1)などにする
+\newcommand{\defLeftrightarrow}{\overset{\text{def}}{\iff}}
+\newcommand*{\defeq}{\stackrel{\text{def}}{=}}
+\newcommand{\Ob}{{\rm Ob}}
+\newcommand{\Ar}{{\rm Ar}}
+\newcommand{\dom}{{\rm dom}}
+\newcommand{\cod}{{\rm cod}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
+\title{情報数学I}
+\author{担当：三好}
+%\date{}%コメントアウトした状態だと今日の日付が入る
+\begin{document}
+\maketitle
+教科書：Category Theory, Second Edition, Steve Awodey, (Oxford University Press, 2010)
+
+\url{http://www.andrew.cmu.edu/course/80-413-713/notes/}
+
+\tableofcontents%目次
+
+\newpage
+
+\section{圏論}
+
+
+\paragraph{集合論}
+
+\begin{itemize}
+    \item 現れるのは集合のみ
+    \item メンバーシップ関係$\in$
+\end{itemize}
+
+$a,b$を集合とする．$a,b$について関係$a\in b$が成り立つ．\\
+$\Rightarrow$ $b$は$a\in b$が成り立つすべての要素$a$の集まり\\
+$\Rightarrow$集合という概念の本質（外延性）
+
+\begin{example}
+    2つの集合$b,b'$が等しい（$b=b'$）とは，$\in$により定義される．
+    \[
+        \forall x(x\in b\to x\in b')\land \forall x'(x'\in b'\to x'\in b)
+    \]
+    （$b$と$b'$とは$\in$では区別できないとき等しい）
+\end{example}
+
+\paragraph{関係$R$と関数$f$}
+
+\begin{dfn*}[関係]
+
+    $X,Y$：集合
+    \[
+        (a,b)\in R\subset X\times Y=\{(x,y)|x\in X\land y\in Y\}
+    \]
+    のとき$a$と$b$は$R$という関係にあると考える．（関係は集合！）
+\end{dfn*}
+
+\begin{example}
+    実数$\mathbb{R}$上の$=$や$\leq$も$\mathbb{R}$上の二項関係．
+\end{example}
+
+\begin{dfn*}[関数（写像）]
+    関数$f\subset X\times Y$が関数（$=$写像\footnote{本講義では関数と写像を同じ意味として扱う}）であるとは，次の2つの条件を満たすことをいう．
+    \begin{enumerate}
+        \item 一意性：$(x,y),(x',y')\in f\Rightarrow y=y'$
+        \item 全域性：$\forall x\in X,\exists y \in Y$（$(x,y)\in f$）
+    \end{enumerate}
+    このとき，$f:X\to Y$，もしくは$X\xrightarrow{f} Y$とかく．$(a,b)\in f$のとき$f(a)=b$とかく．
+\end{dfn*}
+
+\begin{itemize}
+    \item 関数も関係であり，よって集合である．
+    \item 関数の同値性は集合の同値性で決まる（外延的同値）．
+          $f,f':X\to Y$
+          \[
+              \forall a\in X(f(a)=f'(a))\defLeftrightarrow f=f'
+          \]
+          これの左側を集合論的に書くと$\forall a\in X ((a,f(a))=(a,f'(a)))$．
+    \item 同じ入力に同じ出力を返す関数は同じ関数（関数名やアルゴリズムは見ていない）
+\end{itemize}
+
+\paragraph{関数の合成}
+
+集合:$A,B,C$，関数$f:A\to B,g:B\to C$とする．
+
+\begin{dfn*}[合成関数]
+    $f$と$g$の合成関数$g\circ f:A\to C$は，各$a\in A$について
+    \[
+        (g\circ f)(a)\defeq g(f(a))
+    \]
+    により定義される（外延性より一意的）．
+\end{dfn*}
+
+\begin{prop*}[結合律]
+    $f:A\to B, g:B\to C, h:C\to D$に対して
+    \[
+        h\circ (g\circ f)=(h\circ g)\circ f
+    \]
+\end{prop*}
+\begin{proof}
+    合成の定義による．
+\end{proof}
+
+\begin{dfn*}[恒等関数]
+    各集合$A$について恒等関数$\mathbbm{1}_A:A\to A$は，$\forall a\in A$について$\mathbbm{1}_A(a)\defeq a$により定義される．
+\end{dfn*}
+
+\begin{prop*}[恒等射律]
+    $f:A\to B$のとき
+    \[
+        \mathbbm{1}_A\circ f=f，f\circ \mathbbm{1}_B=f
+    \]
+    となる．
+\end{prop*}
+
+\begin{proof}
+    合成の定義と恒等関数の定義により示せる．
+\end{proof}
+
+このように関数では定義から結合律や恒等写律が証明できる．
+
+\begin{itemize}
+    \item 圏論とは，\textbf{関数の抽象代数}という側面をもつ（Awodey）
+    \item 圏論とは，\textbf{普遍性（非常にリッチな極限）}を取り扱う理論．
+          これらを扱うために
+          \begin{itemize}
+              \item limit（極限）/ colimit（余極限）
+              \item adunction（随伴）
+              \item representability（説明可能性）(Universal Mapping Property)
+          \end{itemize}
+\end{itemize}
+
+\paragraph{圏論にまつわる歴史}
+
+集合から集合への関数から，構造付き集合から構造付き集合への構造を保つ関数（=準同型）を考えたいというモチベーションが生まれた．
+
+\begin{table}[htb]
+    \begin{tabular}{llll}
+        1940s & 代数トポロジー                       & 1945 & Eilenberg-MacLane                       \\
+              & \tabitem ホモロジー代数              &      & "General theory of natural equivalence" \\
+              & \tabitem 抽象代数                    &      &                                         \\
+        1950s & A.Grothendieck Tohoku Paper(1957)    & 1954 & N.Yoneda 米田の補題                     \\
+              & \tabitem 代数幾何                    &      & "On the Homology Theory of Modules"     \\
+              & \tabitem アーベル群                  & 1958 & D.Kan "Adjoint factors" 随伴の発見      \\
+        1960s & F.W.Lawvere et al.                   &      &                                         \\
+              & 圏論と論理のつながり                 &      &                                         \\
+              & 圏を対象とする研究グループの出現     &      &                                         \\
+        1970s & （冬の時代）                         &      &                                         \\
+              & 他分野への応用                       &      &                                         \\
+              & \tabitem コンピュータ科学            &      &                                         \\
+              & \tabitem 論理学                      &      &                                         \\
+              & \tabitem 認知科学                    &      &                                         \\
+              & \tabitem 哲学                        &      &                                         \\
+        1980s & コンピュータ科学と論理学との結びつき &      &                                         \\
+              & さらにこれらと圏論との結びつき       &      &                                         \\
+    \end{tabular}
+\end{table}
+
+圏論の応用：表現論，佐藤超関数，Motives（代数幾何，数論）
+
+\paragraph{様々な圏}
+
+\begin{itemize}
+    \item ファイバー圏（1960 -）Benabou Street
+    \item enriched cats（1960 - ）Street Kelly Day ...
+    \item 2-cats bicat（1960s -）Street Kelly Day Benabou ...
+    \item Strict higher dim cats（1960 - ）Ehresmann
+    \item コヒーレンスを持つ弱高次元圏の定義の発見（基本的に$(\omega,\omega)$-圏，$(m,m)$-圏）\\
+          1995 Baez-Dalam Batanin \\
+          2000 Leinster Cheng
+    \item 結び目定理とモノイダル圏の結びつき（late 1980s -）\\
+          Yetter, Joyal, Street
+    \item gausi cat, $(\infty,1)$-catsの整備\\
+          A. Joyal（late 1990s -）\\
+          J. Lurie（2000s -）
+    \item 応用圏論（2010 -）F.Y.Gaimard proofret線形型\\
+          モノイダル圏と線形論理の対応（1990s）（線形論理はCS的に重要）\\
+          圏論的量子論（2000s）
+\end{itemize}
+
+\setcounter{subsection}{2}
+
+\subsection{記号や言葉の定義}
+
+\begin{itemize}
+    \item 対象と射：
+          \begin{itemize}
+              \item 対象（object）：$A,B,C,\ldots$
+              \item 射（arrow）：$f,g,h,\ldots$
+          \end{itemize}
+    \item 圏$\mathcal{C}$において
+          \begin{itemize}
+              \item $\Ob(\mathcal{C})$：対象すべての集まり
+              \item $\Ar(\mathcal{C})$：射すべての集まり
+          \end{itemize}
+    \item 各射$f\in \Ar(\mathcal{C})$について，ドメインとよばれる対象$\dom(f)$とコドメインとよばれる対象$\cod(f)$が\underline{一意的に}割り当てられている．一意的というのは，関数で表せる，ということ：
+          \begin{itemize}
+              \item $\dom :\Ar(\mathcal{C})\to \Ob(\mathcal{C})$
+              \item $\cod :\Ar(\mathcal{C})\to \Ob(\mathcal{C})$
+          \end{itemize}
+          $\dom(f)=A$かつ$\cod(f)=B$のとき，$f:A\to B$と書く（関数の記法を借用．$A,B$の中身の構造については何も考えていない．）
+          \begin{note*}
+              グラフ理論では，対象をnode，射をedge，ドメインをsource，コドメインをtargetとよぶ．
+          \end{note*}
+          ドメインが$A$，コドメインが$B$の射全体の集まりを特に$\mathcal{C}(A,B)$もしくは$\Hom_{\mathcal{C}}(A,B)$と書き\footnote{準同型homomorphicからきている．}，ホムセット（homset）とよぶ．\\
+          これにより，合成の定義がしやすくなるだけでなく，圏論を展開していく上（representabilityを扱うとき）で重要な役割を果たす．
+    \item 合成付きグラフ：
+          \begin{center}
+              \vspace{-1zh}
+              \begin{tikzcd}[row sep=0.5ex]
+                  (-)\circ (-):\mathcal{C}(B,C)\times \mathcal{C}(A,B) \arrow[d,phantom,"\rotatebox{90}{$\in$}",shift left=5.3ex] \arrow[r]& \mathcal{C}(A,C) \arrow[d,phantom,"\rotatebox{90}{$\in$}"]\\
+                  \qquad\qquad\quad (g,f) \arrow[r,mapsto] &
+                  \tcboxmath[
+                      enhanced,
+                      frame hidden, % 枠を消す
+                      interior hidden, % 背景を消す
+                      size=minimal, % 余白を消す
+                      overlay={
+                              \draw[
+                                  blue,
+                                  decorate
+                              ] ([yshift=-4pt]frame.south west) -- ([yshift=-4pt]frame.south east)
+                              node[pos=1.5,scale=0.8,below] {関数合成の記号を借用};
+                          }
+                  ]{g\circ f}
+              \end{tikzcd}
+          \end{center}
+          \vspace{0.5\baselineskip}
+          合成が一意的であるので関数として表せる．結合律を満たすことを定義として要請する．
+    \item 圏：任意の$A\in\Ob(\mathcal{C})$について，$\mathbbm{1}_A:A\to A$で恒等射律をみたすものの存在を要請する（一意性は示せる．$\mathbbm{1}_A=\mathbbm{1}_A\circ\mathbbm{1}_{A'}=\mathbbm{1}_{A'}$）．
+\end{itemize}
+
+関数で成り立っていた代数構造を定義として要請しているのが圏である．
+
+\subsection{圏の例}
+
+\begin{example}[Set]
+    対象を集合とみなし，射を関数（=写像）とみなせばよい．
+\end{example}
+
+\begin{example}[有限な例]
+    \ \vspace{-1zh}
+    \begin{enumerate}
+        \item
+              \begin{tikzcd}
+                  0 \arrow[out=30,in=330,loop,"\mathbbm{1}_0"]
+              \end{tikzcd}
+        \item
+              \begin{tikzcd}
+                  0 \arrow[out=150,in=210,loop,"\mathbbm{1}_0"'] \arrow[r,"f"] & 1 \arrow[out=30,in=330,loop,"\mathbbm{1}_1"]
+              \end{tikzcd}
+        \item
+              \begin{tikzcd}
+                  0 \arrow[out=150,in=210,loop,"\mathbbm{1}_0"'] \arrow[r,"f_0"] \arrow[rd,"f_1\circ f_0"'] & 1 \arrow[d,"f_1"] \arrow[out=75,in=15,loop,"\mathbbm{1}_1"] \\
+                  & 2 \arrow[out=30,in=330,loop,"\mathbbm{1}_2"]
+              \end{tikzcd}
+              \setcounter{enumi}{-1}
+        \item 空圏
+    \end{enumerate}
+\end{example}
+
+\begin{example}[自由生成]
+    任意の適当なグラフに必要なものを付け加えて圏を生成することができる．
+    \begin{center}
+        \begin{tikzcd}
+            & \cdot \arrow[rd] & \\
+            \cdot \arrow[ru] & & \cdot
+        \end{tikzcd}
+        $\Longrightarrow$
+        \begin{tikzcd}
+            & \cdot \arrow[out=125,in=55,loop] \arrow[rd] & \\
+            \cdot \arrow[out=150,in=210,loop] \arrow[ru] \arrow[rr] & & \cdot \arrow[out=30,in=330,loop]
+        \end{tikzcd}
+    \end{center}
+\end{example}
+
+\begin{example}[Partially Ordered Set $(X,\leq)$]
+    \ \vspace{-\baselineskip}
+    \begin{enumerate}
+        \item $\forall x\in X\,(x\leq x)$
+        \item $\forall x,y,z\in X,\,x\leq y\land y\leq z\Rightarrow x\leq z$
+        \item $\forall x,y\in X,\, x\leq y\land y\leq x\Rightarrow x=y$
+        \item $\forall x,y\in X,\, x\leq y \lor y\leq x$
+    \end{enumerate}
+    (1)(2)を満たすのがpreorder（前順序），(1)(2)(3)を満たすのがpartial order（半順序），(1)(2)(3)(4)を満たすのがlinear order（全順序）．$X$を対象の集合，$\leq$を射とみなすと(1)(2)により圏になる．
+
+    \begin{figure}[H]
+        \begin{minipage}{0.45\hsize}
+            \begin{center}
+                \begin{tikzcd}
+                    & \cdot \arrow[out=120,in=60,loop] & \\
+                    \cdot \arrow[out=210,in=150,loop] \arrow[ru] & & \cdot \arrow[out=30,in=330,loop] \arrow[lu] \\
+                    & \cdot \arrow[out=240,in=300,loop] \arrow[lu] \arrow[uu] \arrow[ru] &
+                \end{tikzcd}
+            \end{center}
+            \caption*{partial order, not linear order}
+        \end{minipage}
+        \begin{minipage}{0.45\hsize}
+            \begin{center}
+                \begin{tikzcd}
+                    & \cdot \arrow[out=120,in=60,loop] & \\
+                    \cdot \arrow[out=210,in=150,loop] \arrow[ru] \arrow[rr,bend left=15,crossing over] & & \cdot \arrow[out=30,in=330,loop] \arrow[lu] \arrow[ll,bend left=15,crossing over] \\
+                    & \cdot \arrow[out=240,in=300,loop] \arrow[lu] \arrow[uu] \arrow[ru] &
+                \end{tikzcd}
+            \end{center}
+            \caption*{preorder, not partial order}
+        \end{minipage}
+    \end{figure}
+
+    （以下は圏の定義を満たすことの確認）
+    \begin{enumerate}\renewcommand{\labelenumi}{(\alph{enumi})}
+        \item 任意のドメインとコドメインの間の射は高々1つ．
+        \item 任意の対象について(1)と(a)より恒等射が存在する．
+        \item 射の合成は(2)と(a)より一意的に存在する．
+    \end{enumerate}
+
+    以上をふまえて圏\textbf{Pos}を考えよう
+    \begin{itemize}
+        \item 対象：partial order set
+        \item 射：順序構造を保存する関数（=単調関数）．posの準同型と考えることもできる．
+    \end{itemize}
+    $f:(X,\leq_X)\to (Y,\leq_Y)$（$f:X\to Y,\, x,y\in X$）$x\leq_X y\,\Rightarrow\,f(x)\leq_Y f(y)$
+\end{example}
+
+\begin{example}[Rel]
+    圏は対象だけでは決まらないという例．
+    \begin{itemize}
+        \item 対象：集合（\textbf{Set}と同じ）
+        \item 射：関係（\textbf{Set}と異なる）\\
+              （関係$f\subset A\times B$のドメインは$A$，コドメインは$B$，関数ではないが$f:A\to B$とも書く．）
+        \item 恒等射：$\mathbbm{1}_A=\{(a,a)\in A\times A| a\in A\}\subset A\times A$
+        \item 合成：
+              関係$R\subset A\times B$および$S\subset B\times C$について，関係の合成$S\circ R$は次のように定義される：
+              \[
+                  (a,c)\in S\circ R \defLeftrightarrow \exists b\in B((a,b)\in R\land (b,c)\in S)
+              \]
+              （外延性により各組について定義すれば定まる．）
+    \end{itemize}
+    これらが結合律と恒等射律を満たすことは容易に示せる．よってこれらは圏\textbf{Rel}を定義する．
+\end{example}
+
+集合の圏や群の圏などとよくいうが，射も決まらないと圏も決まらないということに注意．
+
+\begin{dfn*}[concrete categories]
+    インフォーマルには対象が集合+構造，射が構造を保つ（準同型とよばれる）関数であるような圏のこと．\textbf{Pos}や\textbf{Set}などが例．
+\end{dfn*}
+
+射が関数でない圏はconcrete categoriesとは呼ばないことが多い（理由は後述）．
+
+\begin{example}[モノイド(monoid)（単位的半群）]
+    1つの構造を圏とみるものの例．モノイドの集合+構造である$M=\langle \hat{M},(\mathchar`-)\cdot(\mathchar`-),u\rangle$\footnote{$(\mathchar`-)\cdot (\mathchar`-)$は中値演算子のこと}とは以下のようなものである．
+
+    \begin{itemize}
+        \item $\hat{M}$:the underlying set（底集合）．$M$とも書く．
+        \item $u$:unit（単位元）．$e$とも書く．
+        \item $\begin{cases}
+                      (-)\cdot(-):\hat{M}\times\hat{M}\to\hat{M} \\
+                      u\in\hat{M}
+                  \end{cases}$\,\textrm{s.t.}\,
+              $\begin{cases}
+                      \textrm{(1)}\,\forall x,y,z\in\hat{M},\, x\cdot(y\cdot z)=(x\cdot y)\cdot z \\
+                      \textrm{(2)}\,\forall x\in\hat{M},\, u\cdot x=x=x\cdot u
+                  \end{cases}$\footnote{(1)のみのものはsemigroupとよばれる．}
+    \end{itemize}
+    (2)を満たす要素は存在すれば一意的である\\
+    （$\because$$u,u'$がどちらも単位元のとき$u=u\cdot u'=u'$となる．左の等号は$u'$，右の等号は$u$についての(2)を用いた．）
+
+        \subparagraph{モノイド準同型（monoid homomorphism）}\
+
+    $M=\langle \hat{M},(\mathchar`-)\cdot_M(\mathchar`-),u_M\rangle$，$N=\langle \hat{N},(\mathchar`-)\cdot_N(\mathchar`-),u_N\rangle$はモノイド．
+        関数$f:\hat{M}\to\hat{N}$が次の性質を満たすとき，モノイド準同型と呼ばれる：
+        \begin{enumerate}\renewcommand{\labelenumi}{(\alph{enumi})}
+            \setcounter{enumi}{1}
+            \item $f(u_M)=u_N$
+            \item $f(x\cdot_M y)=f(x)\cdot_N f(y)$
+        \end{enumerate}
+        このとき，任意のあるモノイド構造$M$は，対象が1つの圏$\hat{M}$とみなすことができる．
+    \begin{itemize}
+        \item $\Ob(\hat{M})=\{*\}$（一点集合）とおく．
+        \item $\Ar(\hat{M})=\hat{M}$とおく．
+        \item 任意の$x\in \hat{M}$について$x:*\to *$とおく．
+        \item モノイド演算$(\mathchar`-)\cdot(\mathchar`-)$を射の合成とみなす．
+        \item $u\in\hat{M}$を$*$の恒等射$\mathbbm{1}_{*}$とする．
+    \end{itemize}
+    \begin{center}
+        \begin{tikzcd}
+            * \arrow[out=30,in=330,loop,"x"] \arrow[out=120,in=60,loop,"u"] \arrow[out=210,in=150,loop,"y\cdot x"] \arrow[out=300,in=240,loop,"y"]
+        \end{tikzcd}
+    \end{center}
+    このとき，モノイドの条件(1)より結合律が成り立ち，条件(2)より恒等射律が成り立つ．
+    この対応は逆も成り立つので対象の違いをのぞき同一視できる．
+
+    \subparagraph{モノイドと関手}\
+    モノイドを圏とみなしたとき，モノイド準同型は関手とみなせる．
+    \begin{center}
+        \quad\qquad
+        \begin{tikzcd}
+            * \arrow[out=30,in=330,loop,"x"] \arrow[out=120,in=60,loop,"u_M"] \arrow[out=210,in=150,loop,"y\cdot_Mx"] \arrow[out=300,in=240,loop,"y"]
+        \end{tikzcd}
+        \qquad
+        \begin{tikzcd}
+            f(*) \arrow[out=20,in=340,loop,"f(x)"] \arrow[out=120,in=60,loop,"f(u_M)=u_N"] \arrow[out=200,in=160,loop,"f(y\cdot_Mx)=f(y)\cdot_Nf(x)"] \arrow[out=300,in=240,loop,"f(y)"]
+        \end{tikzcd}\\
+        \begin{tikzcd}
+            f:\hat{M} \arrow[r] & [25ex] \hat{N}
+        \end{tikzcd}
+    \end{center}
+\end{example}
+
+圏は対象だけでは決まらない．
+
+\subsubsection{関手（函手, functor）}
+pos monoid 集合に構造が入ったもの　それらがなす圏としてposを考えた
+
+順序構造の準同型とみなすことができる
+圏はObとAr集まりの上の構造だと見ることができる
+
+圏も「構造をもつ集合」とみなすと，「構造を保つ関数」を考えることができる．
+
+\begin{dfn*}[関手]
+    $\mathcal{C},\mathcal{D}$を圏とする．$F:\mathcal{C}\to\mathcal{D}$を関数$F_0:\Ob(\mathcal{C})\to\Ob(\mathcal{D})$，$F_1:\Ar(\mathcal{C})\to\Ar(\mathcal{D})$の組$(F_0,F_1)$とする（添字は明らかな場合は省略する）．$F$が次の3つの条件を満たすとき，関手（functor）と呼ぶ．
+    \begin{enumerate}\renewcommand{\labelenumi}{(\alph{enumi})}
+        \item $F(f:A\to B)=F(f):F(A)\to F(B)$\\
+              （$F_0(\dom(f))=\dom(F_1(f)),\,F_0(\cod(f))=\cod(F_1(f))$．すなわち$\dom,\cod$の構造を保つ）
+        \item $A\in\Ob(\mathcal{C})$のとき，$F(\mathbbm{1}_A:A\to A)=\mathbbm{1}_{F(A)}:F(A)\to F(A)$\\
+              （$F_1(\mathbbm{1}_A)=\mathbbm{1}_{F_0(A)}$．すなわち恒等射の構造を保つ）
+        \item $f:A\to B,\, g:B\to C$のとき$F(g\circ f)=F(g)\circ F(f)$\\
+              （すなわち合成の構造を保つ）
+    \end{enumerate}
+    なお，この3つの性質(a)(b)(c)を関手性（functoriality）と呼ぶ（(a)は自明として略されることもある）．
+\end{dfn*}
+
+\begin{itemize}
+    \item 関手の合成は$F_0,F_1$の合成より定義できる．よって結合律をみたす．
+    \item 恒等関手は$F_0,F_1$が恒等関数であると定義できる．よって恒等射律をみたす．
+\end{itemize}
+よって，圏を対象とし，関手を射とみれば，圏と関手からなる圏を考えることができる．
+
+\begin{example}[\textbf{Pos}]
+    Posの準同型は，Posを圏とみたときの関手になっている．実際$f:(X,\leq_X)\to (Y,\leq_Y)$として
+    \begin{enumerate}\renewcommand{\labelenumi}{(\alph{enumi})}
+        \item $f((x,y))=(f(x),f(y))$より順序保存．
+        \item $f((x,x))=(f(x),f(x))$．反射律と高々1つより，
+        \item $f((y,z)\circ (x,y))=f(x,z)=(f(x),f(z))=(f(y),f(z))\circ (f(x),f(y))$
+    \end{enumerate}
+    となって関手性をみたすことが確認できる．
+\end{example}
+
+しかし正確にはもう少し注意深く考えなければならない（次節）．
+
+圏の定義において
+\begin{itemize}
+    \item $\Ob(\mathcal{C})$と$\Ar(\mathcal{C})$がどちらも大きな集合であるとき圏$\mathcal{C}$を大きな圏（large category）と呼び，$\Ob(\mathcal{C})$と$\Ar(\mathcal{C})$がどちらも小さな集合であるとき圏$\mathcal{C}$を小さな圏（small category）と呼ぶ．
+    \item 大きな圏すべてを対象とし，関手を射とする圏を\textbf{CAT}と書き，小さな圏すべてを対象とし，関手を射とする圏を\textbf{Cat}と書く．
+    \item 圏$\mathcal{C}$の任意の対象$A,B$について，$\mathcal{C}(A,B)$が小さな集合であるとき$\mathcal{C}$を局所小圏（locally small category）とよぶ．
+\end{itemize}
+
+\begin{example}[\textbf{Set}；locally smallだがnot smallな例]
+    $\Ob(\textbf{Set})$と$\Ar(\textbf{Set})$は共に大きな集合であるが，任意の（小さな）集合$A,B$について$\textbf{Set}(A,B)$は（小さな）集合である（$\because$関数の定義より）．
+\end{example}
+
+\subsubsection{集まりの大きさの問題}
+
+圏の定義のときに「集合」と書かずに「集まり」と書いたのには理由がある．
+
+すべての集合の集まり$U$は集合か？という問を考えたとき，答えはNoである．もし集合であったなら$U\in U$が成り立つはずだが，このような集合の存在は矛盾を引き起こす（Russell Paradox）．しかし圏論では集合ではない（大きな）集まりを多用する．
+\begin{example}[\textbf{Set}]
+    $\Ob(\textbf{Set})$は集合ではない．$\Ar(\textbf{Set})$も集合でない．
+\end{example}
+構造をもつ集合とその準同型からなる圏も同様である（\textbf{Pos}，\textbf{Grp}，\textbf{Rng}，etc）．この問題をなんとかしたい．
+
+\vspace{0.5\baselineskip}
+
+\subparagraph{解決法その1（Grothendiech）}
+
+より大きな集まりを扱える集合論で圏論を展開する．
+
+NBG集合論：ZFC集合論の拡大であり，集合すべての集まりのような大きな集まりが組み込まれており，クラス（class）と呼ばれる
+（たいていはNBG集合論を直接使うのではなくZFCを用いて大きな集まりが現れるときだけクラスという名称を借用することが多い）．
+
+しかし一般にはすべてのクラスを集めたときに再び同様の問題が起こる．
+
+Grothendiechの解決法（SGs4）：
+（強）到達不能基数（inaccessible cardined）の存在を仮定する．そうすれば，集合を対するクラスのようなより大きな集まりの階層を構成することができる．$\blacksquare$
+
+\vspace{0.5\baselineskip}
+
+\subparagraph{解決法その2（MacLane）}
+
+基数に言及するのではなくユニバースと呼ばれる特殊な集合の存在を仮定する．
+\begin{dfn*}[ユニバース]
+    空でない集合$\mathcal{U}$がユニバースであるとは，次の4条件を満たすことである：
+    \begin{enumerate}
+        \item $x\in y\in \mathcal{U}$ならば$x\in \mathcal{U}$（$\in$の左方に閉じている）
+        \item $x,y\in \mathcal{U}$ならば$\{x,y\}\in\mathcal{U}$（対の構成について閉じている）
+        \item $x\in\mathcal{U}$ならば$\mathcal{P}\defeq\{y|y\subset x\}\in\mathcal{U}$（冪集合について閉じている）
+        \item $I\in \mathcal{U}, i\in I,x_i\in I$ならば$\bigcup_{i\in I}x_i\defeq\{y|\exists i\in I(y\in x_i)\}\in \mathcal{U}$（$I\in\mathcal{U}$の添字の和集合について閉じている）
+    \end{enumerate}
+\end{dfn*}
+$\mathcal{U}$がユニバースならば次が成り立つ（証明略）：
+\begin{enumerate}\setcounter{enumi}{4}
+    \item $\phi\in\mathcal{U}$
+    \item $x\in\mathcal{U}$ならば$\{x\}\in\mathcal{U}$
+    \item $x\in\mathcal{U}$ならば$\bigcup_{y\in x}y\in\mathcal{U}$
+    \item $x,y\in\mathcal{U}$ならば$x\times y\in\mathcal{U}$
+    \item $I\in\mathcal{U},i\in I,x_i\in\mathcal{U}$ならば$\coprod_{i\in I}x_i\in\mathcal{U},\prod_{i\in I}x_i\in\mathcal{U}$
+\end{enumerate}
+すなわち，$\mathcal{U}$は通常の集合の操作について閉じている．そこで$\mathcal{U}$の要素を新たに＜集合＞と呼ぶにしても通常の数学が展開できる．そこで，ZFCに次の公理を加える：
+\begin{center}
+    \textbf{公理：}$\mathbb{N}\in\mathcal{U}$をみたすユニバース$\mathcal{U}$が存在する
+\end{center}
+すると$\mathcal{U}$は集合でもあるので$\mathcal{U}$に対する集合的操作を新たに定義しなおす必要はない．また，$\mathcal{U}$を要素とする別のユニバース$\mathcal{U}$の存在も公理から導かれるため，ユニバースの階層も方法1と同様に構成される．$\blacksquare$
+\vspace{0.5\baselineskip}
+
+これらの2つの方法のどちらを採用しても，理論の展開に大きな違いはない．
+方法1の集合，あるいは方法2の$\mathcal{U}$の集合を小さな集合（small set），方法1のクラスあるいは方法2の$\mathcal{U}$の要素を大きな集合（large set）と呼び，これらを区別することのみが圏論にとって重要である．
+
+この講義では関数，関係などの再定義が不要であるため，方法2を採用することにする．（圏論的モデル論など集合論と圏論の両方が関わる分野ではもう少し慎重になる必要がある．）
+
+\subsection{同型性}
+
+\begin{dfn*}[同型射（isomorphism）/ 逆射（inverse）]
+    圏$\mathcal{C}$の射$f:A\to B$が\textbf{同型射（isomorphism）}であるとは，次の条件をみたす射$g:B\to A$が存在することをいう：
+    \[
+        \begin{split}
+            g\circ f&=\mathbbm{1}_A\\
+            f\circ g&=\mathbbm{1}_B
+        \end{split}
+    \]
+    $g$を$f$の\textbf{逆射（inverse）}と呼ぶ．
+\end{dfn*}
+
+\begin{itemize}
+    \item 逆射は存在するなら一意的である．$g_1,g_2$がともに上の条件を満たすとすると
+          \[
+              g_1
+              \tcboxmath[
+                  enhanced,
+                  frame hidden, % 枠を消す
+                  interior hidden, % 背景を消す
+                  size=minimal, % 余白を消す
+                  overlay={
+                          \draw[
+                              blue,
+                              decorate
+                          ]
+                          node[pos=0.0,scale=0.8,below,yshift=-4pt,xshift=36pt] {↑$g_2\circ f=\mathbbm{1}$};
+                      }
+              ]{\quad=\quad}
+              g_2\circ f\circ g_1
+              \tcboxmath[
+                  enhanced,
+                  frame hidden, % 枠を消す
+                  interior hidden, % 背景を消す
+                  size=minimal, % 余白を消す
+                  overlay={
+                          \draw[
+                              blue,
+                              decorate
+                          ]
+                          node[pos=0.0,scale=0.8,below,yshift=-4pt,xshift=36pt] {↑$f \circ g_1=\mathbbm{1}$};
+                      }
+              ]{\quad=\quad}g_2
+          \]
+          となる．$\blacksquare$
+    \item $f$の逆射を$f^{-1}$と書くことにする．
+    \item 定義より逆射も同型射であり，$f^{-1}$の逆射は$f$である．
+    \item 対象$A,B$について同型射$f:A\to B$が存在するとき，$A$と$B$は\textbf{同型（isomorphic）}であるといい，$A\cong B$と書く．
+    \item $\cong$は$\Ob(\mathcal{C})$上の同値関係である．
+          \begin{enumerate}
+              \item $A\cong A$（$\because$$f$として$\mathbbm{1}_A$をとる）．
+              \item $A\cong B$ならば$B\cong A$（$\because$逆射も同型射）．
+              \item $A\cong B$かつ$B\cong C$ならば$A\cong C$（$\because$同型射$f:A\to B,\, g:B\to C$について$(f^{-1}\circ g^{-1})\circ(g\circ f)=f^{-1}\circ f=\mathbbm{1}_A$，$(g\circ f)\circ(f^{-1}\circ g^{-1})=g^{-1}\circ g=\mathbbm{1}_C$より$g\circ f:A\to C$は同型射）．
+          \end{enumerate}
+    \item 同型射$f:A\to B$について$A=B$とは限らないので$\cong$は$=$より強い$\Ob(\mathcal{C})$上の同値関係である（下の例を参照．ここでの強いとは，より多くのものを同値とするということ）．
+          \begin{example}[\textbf{Set}]
+              $\mathbf{Set}$の同型射は全単射と一致する．
+          \end{example}
+          \begin{proof}
+              （$\Rightarrow$）関数の定義より，関数$f:A\to B$が全単射であれば逆関数$f^{-1}:B\to A$が一意的に存在する．$f(a)=b$のとき$f^{-1}(b)=a$．$f^{-1}(b)=a$のとき$f(a)=b$．任意の$b\in B$について$f^{-1}(b)\in A$であり，$f(f^{-1}(b))=b$と$f(f^{-1}(a))=a$をみたす．\\
+              （$\Leftarrow$）$f:A\to B$が同型射とする．$g$を$f$の逆射とする．$f(a_1)=f(a_2)\,\Rightarrow\, g(f(a_1))=g(f(a_2))\,\Rightarrow\, a_1=a_2$より$f$は単射である．また，$\forall b\in B$について$g(b)=a$とすると$f(a)=f(g(b))=b$より$f$は全射である．
+          \end{proof}
+    \item $A\cong B$のとき同型射$f:A\to B$は一意的ではない．
+    \item 構造を保つ集合を対象とし，その構造を保つ関数（準同型）を射となる圏では，一般には対象が全単射であるような準同型（bijective homomorphism）が同型射（isomorphism）になるとは限らない．
+          \begin{example}[$\mathbf{Pos}$]
+              $A=(U,\leq_A)$，$\leq_A=\{(0,0),(1,1)\}$，$B=(U,\leq_B)$，$\leq_A=\{(0,0),(0,1),(1,1)\}$とする．
+              順序構造を保存し（準同型），対象について全単射であるような$f:A\to B$は
+              \[
+                  f(0)=0,f(1)=(1),f((0,0))=(0,0),f((1,1))=(1,1)
+              \]
+              もしくは
+              \[
+                  f(0)=1,f(1)=0,f((0,0))=(1,1),f((1,1))=(0,0)
+              \]
+              であるが，いずれも$g\circ f=\mathbbm{1}_A$をみたす$g:B\to A$は存在しないので同型射ではない．すなわち，$A$と$B$は$\mathbf{Pos}$で同型ではない．$\blacksquare$
+          \end{example}
+    \item 圏の同型射は射のみで定義されるという点で抽象的定義であるが，$\mathbf{Set},\mathbf{Mon}$などいくつかの圏以外では全単射である準同型と一致するとは限らないことに注意．
+\end{itemize}
+
+\begin{dfn*}[群（Group）]
+    \textbf{群（Group）}とは，逆元をもつモノイドである．すなわち
+    $G=\langle \hat{G},(\mathchar`-)\cdot (\mathchar`-),u,(\mathchar`-)^{-1} \rangle$\footnote{$u$は$e$と書くことが多い．$\hat G$も$G$と書くことが多い．}\\
+    \[
+        \begin{cases}
+            (\mathchar`-)\cdot(\mathchar`-):\hat{G}\times\hat{G}\to\hat{G} \\
+            u\in\hat{G}                                                    \\
+            ()\mathchar`-)^{-1}:\hat{G}\to\hat{G}
+        \end{cases}\,\textrm{s.t.}\,
+        \begin{cases}
+            \forall x,y,z\in\hat{G}                          \\
+            \textrm{(1)}\,z\cdot(y\cdot x)=(z\cdot y)\cdot x \\
+            \textrm{(2)}\, u\cdot x=x=x\cdot u               \\
+            \textrm{(3)} x^{-1}\cdot x=u=x\cdot x^{-1}
+        \end{cases}
+    \]
+\end{dfn*}
+
+モノイドの場合と同様に，対象が1個の圏と見なすと，逆元の存在により，すべての射は同型射となる．
+
+\begin{example}
+    $\mathbb{Z},\mathbb{Q},\mathbb{R},\mathbb{C}$は$+$（加法）について群をなす．\footnote{$\mathbb{N}=\{0,1,2,3,\ldots\}$は$+$についてモノイドではあるが群ではない．}
+\end{example}
+
+\begin{example}
+    任意の集合$X$について，$X$から$X$への全単射（$X$の自己同型（automonphism），$X$の置換（permutation）と呼ばれる）すべての集合$\mathrm{Aut}(X)$は関数の合成を群の演算とみなせば，群をなす．$\mathrm{Aut}(X)$の部分群$G$（部分集合で同じ演算について群をなすもの）を置換群（group of permutations）とよぶ．
+\end{example}
+
+\begin{dfn*}[群準同型（group homomorphism）]
+    群準同型（group homomorphism）とは，モノイド準同型である．
+\end{dfn*}
+
+群準同型では逆元も保存される．（$\because$$f:G\to H$，群準同型とする．$u_H=f(u_G)=f(x^{-1}\cdot_G x)=f(x^{-1})\cdot_H f(x)$．同様に$f(x)\cdot_H f(x^{-1})=u_H$．よって$f(x^{-1})$は$f(x)$の$H$における逆元である．）
+
+    以下はとばしても支障はない．
+    \begin{thm*}[表現定理（Cayley）]
+        任意の群はある置換群と群として同型である．
+    \end{thm*}
+
+    \begin{thm*}
+        任意の$\Ob(\mathcal{C})$が集合である圏$\mathcal{C}$は，対象が集合で射が関数のある圏$\overline{\mathcal{C}}$（$\mathbf{Set}$の部分圏）と同型である．
+    \end{thm*}
+
+    \begin{itemize}
+        \item すべての圏が対象として集合，射として関数であるわけではない．一方で（サイズが適切なら）そのような圏と同型である．したがって，具体圏（concrete category）を集合と関数の圏に制限するのは適切ではない（Awodeyの立場）
+        \item $\mathcal{C}\to\mathbf{Set}$という忠実関手を具体圏とするよく見られる立場に疑問を呈している（Chapter2とのつながりを意識している）
+    \end{itemize}
+
+    \subsection{圏の構成}
+
+    圏から別の圏を構成する方法を考える．
+
+    \subsubsection{圏の直積}
+
+    \begin{dfn*}[圏の直積]
+        $\mathcal{C},\mathcal{D}$が圏であるとき，圏$\mathcal{C}\times\mathcal{D}$は次のように定義される：
+        \begin{itemize}
+            \item 対象：$(C,D)$（$C\in\mathcal{C},\, D\in\mathcal{D}$）
+            \item 射：$(f,g):(C,D)\to(C',D')$
+            \item $(f',g')\circ(f,g)\defeq(f'\circ f,g'\circ g)$
+            \item $\mathbbm{1}_{(C,D)}\defeq(\mathbbm{1}_C,\mathbbm{1}_D)$
+        \end{itemize}
+    \end{dfn*}
+
+    これが圏をなすことは容易に確認できる．\footnote{勝手にこう定義したので確認が必要}
+
+    このとき\textbf{射影関手（projection functors）}が定義できる：
+
+    \begin{center}
+        \begin{tikzcd}
+            \mathcal{C} & \mathcal{C}\times\mathcal{D} \arrow[r,"\pi_2"] \arrow[l,"\pi_1"'] & \mathcal{D}
+        \end{tikzcd}
+    \end{center}
+    ただし$\pi_1(C,D)\defeq C,\, \pi_1(f,g)\defeq f$，$\pi_2(C,D)\defeq D,\, \pi_2(f,g)\defeq g$である．
+
+    \begin{itemize}
+        \item 後に圏の対象の直積を一般に定義する．ここでの直積の定義は$\mathbf{CAT}$の一般的な直積の定義と一致している（up to iso:同型をのぞいて一意的）．
+        \item 群$G,H$の直積$G\times H$も群を1対象の圏と考えたときのこの意味での直積と一致する（モノイドも同様）．
+    \end{itemize}
+
+    \subsubsection{反対圏（逆圏）}
+
+    \begin{dfn*}[反対圏（opposite category）\footnotemark]
+        $\mathcal{C}$を圏とする．$\mathcal{C}$の反対圏$\mathcal{C}^{\mathrm{op}}$とは対象の集まりは$\mathcal{C}$と同じで，$\mathcal{C}$の射$f:C\to D$に対して$f:D\to C$を射とする圏である．
+    \end{dfn*}
+    \footnotetext{最近は反対圏の方がよく使われる言葉．}
+
+$\mathcal{C}^{\mathrm{op}}$の$f,D,C$を$\mathcal{C}$の$f,D,C$と区別するために便宜上$f^*,D^*,C^*$と書くとする．（実際には$f=f^*,D=D^*,C=C^*$に注意．）
+
+$f:C\to D$に$f^*:D^* \to C^*$が対応する．
+    \[
+        \begin{cases}
+            \Ob(\mathcal{C})  =\Ob(\mathcal{C}^{\mathrm{op}}) \\
+            \Ar(\mathcal{C})  =\Ar(\mathcal{C}^{\mathrm{op}}) \\
+            \dom(f)           =\cod(f^*)                      \\
+            \cod(f)           =\dom(f^*)
+        \end{cases}
+    \]
+    最後の2つが逆に対応していることに注意．
+
+    この記法で合成と恒等射を考えると
+    \[
+        \mathbbm{1}_{C^*}=(\mathbbm{1}_C)^*,\, f^*\circ g^*=(g\circ f)^*
+    \]
+    （このことは要チェック）図式で書くと合成は次のように定義できる．
+    \begin{center}
+        \fbox{in $\mathcal{C}$}
+        \begin{tikzcd}
+            A \arrow[r,"f"] \arrow[rd,"g\circ f"'] & B \arrow[d,"g"] \\
+            & C
+        \end{tikzcd}
+        $\defLeftrightarrow$
+        \fbox{in $\mathcal{C}^*$}
+        \begin{tikzcd}
+            A^* & B^* \arrow[l,"f^*"'] \\
+            & C^* \arrow[lu,"f^*\circ g^*"] \arrow[u,"g^*"']
+        \end{tikzcd}
+    \end{center}
+    恒等射についても同様に定義できる\footnote{このように図式を描くときはどの圏で考えているかが重要．なので，ここでも\fbox{in $\mathcal{C}$}のように書いている．}
+
+    ある圏$\mathcal{C}$で「圏論的議論で説明された」定理については，反対圏$\mathcal{C}^{\mathrm{op}}$で「双対な（dual）」定理が成り立つ．
+
+    \subsubsection{射圏（arrow category）}
+
+    \begin{dfn*}[射圏]
+        $\mathcal{C}$を圏とする．$\mathcal{C}$の射圏$\mathcal{C}^{\to}$は$\mathcal{C}$の射を対象とし，$f:A\to B$から$f':A'\to B'$への射を次のような可換図式（commutatire diagram）\footnote{ある図式が可換であるというのは，この図でいえば$A$から$B'$へ複数のパスがあるが，どちらの経路を合成しても同じ射になるということをいう.．}とする圏である．
+        \begin{center}
+            \fbox{in $\mathcal{C}$}
+            \begin{tikzcd}
+                A \arrow[r,"g_1"] \arrow[d,"f"'] & A' \arrow[d,"f'"] \\
+                B \arrow[r,"g_2"] & B'
+            \end{tikzcd}
+        \end{center}
+        すなわち，次の条件を満たす$\mathcal{C}$の射のペア$(g_1,g_2)$と表現できる：
+        \[
+            g_2\circ f=f'\circ g_1
+            \quad
+            \left(
+            \begin{tabular}{c}
+                    \fbox{in $\mathcal{C}^{\to}$}
+                    \begin{tikzcd}
+                        f \arrow[r,"{(g_1,g_2)}"] & f'
+                    \end{tikzcd}
+                    \, s.t.\, $g_2\circ f=f'\circ g_1$
+                \end{tabular}
+            \right)
+        \]
+    \end{dfn*}
+
+    これが圏の定義をみたすことを示すためには，適切な合成と恒等射の定義が必要である．$f:A\to B$の恒等射$\mathbbm{1}_f$は$(\mathbbm{1}_A,\mathbbm{1}_B)$\footnote{
+        $\mathbbm{1}_f=\begin{tikzcd}
+                A \arrow[d,"f"] \arrow[r,"\mathbbm{1}_A"] & A \arrow[d,"f"]\\
+                B \arrow[r,"\mathbbm{1}_B"] & B
+            \end{tikzcd}$\fbox{in $\mathcal{C}$}
+    }とし，合成は$(h_1,h_2)\circ (g_1,g_2)\defeq((h_1\circ g_1,h_2\circ g_2))$とすれば定義をみたせる（要チェック！）
+
+    \begin{center}
+        \fbox{in $\mathcal{C}$}
+        \begin{tikzcd}
+            A \arrow[r,"g_1"] \arrow[d,"f"] & A' \arrow[r,"h_1"] \arrow[d,"f'"] & A'' \arrow[d,"f''"] & \Leftarrow \dom \\
+            B \arrow[r,"g_2"'] & B' \arrow[r,"h_2"'] & B'' &\Leftarrow \cod
+        \end{tikzcd}
+    \end{center}
+
+    ドメインとコドメインを表す\blueunderline{関手}{関手性のチェック！}が定義できる．
+
+    \begin{center}
+        \begin{tikzcd}
+            C \arrow[d,phantom,"\rotatebox{90}{$\in$}"] & & [-2.4em] |[alias=X]| C^{\to} \arrow[ll,"\dom"'] \arrow[rr,"\cod"] & [-2.4em] & C \arrow[d,phantom,"\rotatebox{90}{$\in$}"] \\ [-1ex]
+            A \arrow[d,"g_1"] & (A \arrow[l,mapsto] \arrow[rr,"f"{name=Z}] \arrow[d,"g_1"] & & B) \arrow[r,mapsto] \arrow[d,"g_2"]& B \arrow[d,"g_2"] \\
+            A' & (A' \arrow[l,mapsto] \arrow[rr,"f'"'] & & B') \arrow[r,mapsto] & B'
+            \arrow[phantom,"\rotatebox{90}{$\in$}",from=X,to=Z]
+        \end{tikzcd}
+    \end{center}
+
+    \subsubsection{スライス圏}
+
+    \subsubsubsection{スライス圏}
+
+    \begin{dfn*}[スライス圏（slice category）]
+        圏を$\mathcal{C}$とする．スライス圏$\blueunderline{\mathcal{C}}{圏}/\blueunderline{C}{対象}$は，
+        \begin{itemize}
+            \item 対象：$\mathcal{C}$の射$f$で$\cod(f)=C$であるもの
+                  \begin{center}
+                      \begin{tikzcd}
+                          X \arrow[r,"f"] & C
+                      \end{tikzcd}
+                  \end{center}
+            \item 射：(\begin{tikzcd}
+                      X \arrow[r,"f"] & C
+                  \end{tikzcd})から(\begin{tikzcd}
+                      X' \arrow[r,"f'"] & C'
+                  \end{tikzcd})への射は以下の図式である：
+                  \begin{center}
+                      \fbox{in $\mathcal{C}$}
+                      \begin{tikzcd}
+                          X \arrow[rr,"a"] \arrow[rd,"f"] & & X' \arrow[ld,"f'"] \\
+                          & C &
+                      \end{tikzcd}
+                  \end{center}
+                  すなわち$\mathcal{C}$の射\begin{tikzcd}
+                      X \arrow[r,"a"] & X'
+                  \end{tikzcd}
+                  で，
+                  \[
+                      f'\circ a=f
+                  \]
+                  をみたすものである.．
+        \end{itemize}
+    \end{dfn*}
+
+    これが圏になっていることをチェックするためには，合成と恒等射を定める必要がある．
+
+    \begin{figure}[H]
+        \begin{minipage}{0.45\hsize}
+            \begin{center}
+                \fbox{in $\mathcal{C}$}
+                \begin{tikzcd}
+                    X \arrow[r,"a"] \arrow[rd,"f"'] & X' \arrow[r,"b"] \arrow[d,"f'"'] & X'' \arrow[ld,"f''"]\\
+                    & C &
+                \end{tikzcd}
+            \end{center}
+            \caption*{合成は射$b\circ a$で上の可換図式をみたすもの．}
+        \end{minipage}
+        \begin{minipage}{0.45\hsize}
+            \begin{center}
+                \fbox{in $\mathcal{C}$}
+                \begin{tikzcd}
+                    X \arrow[rr,"\mathbbm{1}_X"] \arrow[rd,"f"]& & X \arrow[ld,"f"]\\
+                    & C &
+                \end{tikzcd}
+            \end{center}
+            \caption*{恒等射は$\mathcal{C}$の射$\mathbbm{1}_X$からなる図式}
+        \end{minipage}
+    \end{figure}
+
+    関手$U:\mathcal{C}/C\to C$が定義できる（スライスの構造を忘却する）\footnote{忘却関手との混同に注意．}
+
+    \begin{center}
+        \begin{tikzcd}
+            & \mathcal{C}/C \arrow[d,phantom,"\rotatebox{90}{$\in$}"] \arrow[r] & C \arrow[d,phantom,"\rotatebox{90}{$\in$}"] \\ [-1ex]
+            & X \arrow[r,mapsto] \arrow[ld] \arrow[dd,"a"] & X \arrow[dd,"a"] \\ [-3ex]
+            C & & \\ [-3ex]
+            & X_1 \arrow[lu] \arrow[r,mapsto] & X'
+        \end{tikzcd}
+    \end{center}
+
+$\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関手$G_*:\mathcal{C}/C\to \mathcal{C}/D$が定義できる．$g$から誘導される関手（induced functor）と呼ばれる．
+
+
+    \begin{figure}[H]
+        \begin{minipage}{0.45\hsize}
+            \begin{center}
+                \fbox{in $\mathcal{C}$}
+                \begin{tikzcd}[column sep=huge, row sep=huge]
+                    X \arrow[d,"f"{name=X}] \arrow[rd,"g\circ f"{name=Y}] & \\
+                    C \arrow[r,"g"] & D
+                    \arrow[mapsto,from=X,to=Y,red,"\footnotemark"' near start]
+                \end{tikzcd}
+            \end{center}
+            \begin{tikzcd}
+                \mathcal{C}/C\ni f \arrow[r,"a"] & f'
+            \end{tikzcd}
+            \begin{tikzcd}
+                \mathcal{C}/D\ni g\circ f \arrow[r,"a"] & g\circ f'
+            \end{tikzcd}
+        \end{minipage}
+        \begin{minipage}{0.45\hsize}
+            \begin{center}
+                \fbox{in $\mathcal{C}$}
+                \begin{tikzcd}[column sep=huge, row sep=huge]
+                    X \arrow[d,"f"] \arrow[rd,"g\circ f" near start,blue,sloped] \arrow[r,"a"] & X' \arrow[d,"g\circ f'",blue] \arrow[ld,"f'"' near start,sloped]\\
+                    C \arrow[r,"g"] & D
+                \end{tikzcd}\footnotemark
+            \end{center}
+        \end{minipage}
+    \end{figure}
+
+    \footnotetext{$g$によって$f$を$g\circ f$に対応させるようなものが$g_*$である．}
+
+    \footnotetext{
+        \fbox{in $\mathcal{C}/C$}
+        \begin{tikzcd}
+            X \arrow[d,"f"] \arrow[r,"a"] & X' \arrow[ld,"f'"]\\
+            C &
+        \end{tikzcd}
+        を\,
+        \fbox{in $\mathcal{C}/D$}
+        \begin{tikzcd}
+            X \arrow[rd,"g\circ f"'] \arrow[r,"a"] & X' \arrow[d,"g\circ f'",blue] \\
+            & D
+        \end{tikzcd}
+        にうつす．
+    }
+
+    \subsubsubsection{コスライス圏}
+
+    \begin{dfn*}[コスライス圏（coslice category）]
+        圏$\mathcal{C}$に対してコスライス圏$\blueunderline{C}{対象}/\blueunderline{\mathcal{C}}{圏}$は
+        \begin{itemize}
+            \item 対象：$\mathcal{C}$の射$f$で$\dom(f)=C$のもの
+                  \begin{center}
+                      \begin{tikzcd}
+                          C \arrow[r] & X'
+                      \end{tikzcd}
+                  \end{center}
+            \item 射：(\begin{tikzcd}
+                      C \arrow[r,"k'"] & X'
+                  \end{tikzcd})から(\begin{tikzcd}
+                      C \arrow[r,"k"] & X
+                  \end{tikzcd})への射は以下の図式である：
+                  \begin{center}
+                      \fbox{in $\mathcal{C}$}
+                      \begin{tikzcd}
+                          X  & & X' \arrow[ll,"b"]  \\
+                          & C \arrow[lu,"k"] \arrow[ru,"k'"]&
+                      \end{tikzcd}
+                  \end{center}
+        \end{itemize}
+    \end{dfn*}
+    ここで，
+    \begin{center}
+        \fbox{in $\mathcal{C}^{\textrm{op}}$}
+        \begin{tikzcd}
+            X \arrow[rr,"b"] \arrow[rd,"k"]& & X' \arrow[ld,"k'"]  \\
+            & C &
+        \end{tikzcd}
+    \end{center}
+    したがって，コスライス圏$C/\mathcal{C}$はスライス圏$\mathcal{C}^{\textrm{op}}/C$と考えても同じである．
+
+\subsection{自由(生成)圏（free category）}
+
+\begin{itemize}
+    \item 自由モノイド
+          \begin{itemize}
+              \item アルファベット\quad $A=\{a,b,c,\cdots\}$
+              \item 文字\quad $a,b,c,\cdots$
+              \item 言葉（word）：有限長の文字列\quad $thisword,categoriesarefun,$ etc...\\
+                    空の語を"-"で表す（$\varepsilon$を用いることも多い）\\
+                    $A$上のすべての語の集合$A^*$をクリーネ閉包（Kleene closure）という．\\
+                    $A^*$上の二項演算$*$（連結,concatenation）を次のように定義する：
+                    \[
+                        \forall w,w'\in A^* (w * w'\defeq \blueunderline{ww'}{文字の並びとしてつなげる})
+                    \]
+                    $
+                        \left\{
+                        \begin{tabular}{l}
+                            $*$は結合律をみたす．$(w * w') * w'' = w * (w' * w'')$ \\
+                            $*$は単位元$\varepsilon$をもつ．$\varepsilon * w = w = w * \varepsilon$
+                        \end{tabular}
+                        \right.
+                    $\vspace{0.25\baselineskip} \\
+                    すなわち$A^*$はモノイドである．このとき，$A^*$は$A$上の自由モノイド（free monoid）という（$A^*=\langle |
+                        A^*|,(\textrm{-})*(\textrm{-}),\varepsilon\rangle$）
+          \end{itemize}
+    \item $A$の元は$A^*$の生成元（generator）と呼ばれる．
+    \item $a\in A$は長さ1の語とみなすことができるので，関数$i:A\to A^*$を$i(\blueunderline{a}{文字})=\blueunderline{a}{語}$により定義できる．それを生成元の埋め込み（insertion of generators）と呼ぶ．\\
+          文字$a$からなる語は同じく$a$と書く．
+    \item 『$A$の元から自由モノイド$A^*$が$(\mathrm{-})*(\mathrm{-})$\footnote{積（product）とよぶこともある．}により生成される』とは，$A^*$がある$a_1,a_2,\ldots,a_m\in A$について$w=a_1*a_2*\cdots *a_m=a_1a_2\cdots a_m$と表わせるすべての語$w$の集合であることをいう．\footnote{$A=\{a,b\}$なら$A^*\ni a,b,ab,ba,aba,aabb,\ldots$}
+    \item より一般的に，あるモノイド$M=\langle M,(\mathrm{-})\cdot_M(\mathrm{-}),u_M\rangle$が$M$の部分集合$A$によって自由生成されるとは，以下の2つの条件を満たすことをいう：
+          \begin{enumerate}
+              \item $M$のすべての元$m$は，有限個（0個も含む）の$A$の元の積$(\mathrm{-})\cdot_M(\mathrm{-})$をとることにより
+                    \[
+                        m=a_1\cdot_M a_2\cdot_M\cdots\cdot_M a_m\quad(1\leq i\leq m,a_i\in A)
+                    \]
+                    （0個の場合は$m=u_M$）と表せる．
+              \item $M$の元の間に非自明な（=モノイド構造の条件\footnote{結合律と単位元律のこと．}から導かれる以外の）関係はない．言い換えると
+                    \[
+                        M\ni a_1\cdot_M a_2\cdot_M\cdots\cdot_M a_j = a_1'\cdot_Ma_2'\cdot_M\cdots\cdot_M a_k'\quad(a_i,a_i'\in A)
+                    \]
+                    は結合律と単位元律のみから導かれる．\footnote{ユニバーサル代数に由来する}
+          \end{enumerate}
+          条件(1)を"no junk"，条件(2)を"no noise"とよぶこともある．
+    \item すべてのモノイド$N=\langle|N|,(\textrm{-})\cdot_N(\textrm{-}),u_N\rangle$は台集合（underlying set）$|N|$をもつ．
+    \item すべてのモノイド準同型$f:N\to M$は台関数（underlying function）$|f|:|N|\to|M|$を持つ．これが関手の条件をみたすことは容易にわかる．これは"\textbf{忘却関手（forget functor）}"と呼ばれる．
+    \item 集合$A$上の自由モノイド$M(A)$は次の条件をみたす（同型を除いて）一意的な\footnote{prop1.10で示す}モノイドである．この条件をuniversal mapping property(UMP)と呼ぶ．
+          \subparagraph{\underline{$M(A)$のUMP}}
+          関数$i:A\to|M(A)|$は，任意のモノイド$N$と任意の関数$f:A\to|N|$について一意的なモノイド準同型$\overline{f}:M(A)\to N$が存在して$|f|\circ i=f$をみたす．
+
+          \begin{center}
+              \begin{tikzcd}
+                  & M(A) \arrow[r,"\exists !\overline{f}"] & \forall N \arrow[dd,bend left,"忘却",blue,xshift=2.4em] & \fbox{in $\mathbf{Mon}$} & \\ [-3.2ex]
+                  |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & &|[alias=Y]| \\ [-3.2ex]
+                  & \mid M(A)\mid \arrow[r,"|f|"] & \mid N\mid & \fbox{in $\mathbf{Sets}$} & \\
+                  & A \arrow[u,"i"] \arrow[ru,"\forall f"']
+              \end{tikzcd}\footnotemark
+          \end{center}
+          \footnotetext{
+              \begin{tikzcd}
+                  & M(A) & \fbox{in $\mathbf{Mon}$} & \\ [-3.2ex]
+                  |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & &|[alias=Y]| \\ [-3.2ex]
+                  & \mid M(A)\mid & \fbox{in $\mathbf{Sets}$} & \\
+                  & A \arrow[u,"i"']
+              \end{tikzcd}
+              から
+              \begin{tikzcd}
+                  & \forall N & \fbox{in $\mathbf{Mon}$} & \\ [-3.2ex]
+                  |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & &|[alias=Y]| \\ [-3.2ex]
+                  &  \mid N\mid & \fbox{in $\mathbf{Sets}$} & \\
+                  & A \arrow[u,"\forall f"']
+              \end{tikzcd}
+              への射\begin{tikzcd}[column sep=1em]
+                  |[alias=X]|\arrow[r,"\exists ! \overline{f}",to=Y] & & &|[alias=Y]| \\
+                  |[alias=S]|\arrow[r,"|f|",to=T] & & &|[alias=T]|
+              \end{tikzcd}と考えるとわかりやすい．
+          }
+
+
+\end{itemize}
+
+\setcounter{dfn}{8}
+
+\begin{prop}
+    $A^*$は$A$上の自由モノイドのUMPをみたす．
+\end{prop}
+
+\begin{proof}（存在）
+    $f:A\to|N|$から$\overline{f}:A^*\to N$を次のように定義する：
+    \[
+        \begin{cases}
+            \,\overline{f}(\varepsilon)=u_N                                   & （単位元）       \\
+            \,\overline{f}(a_1\cdots a_i)=f(a_1)\cdot_N \cdots \cdot_N f(a_i) & （生成元の合成）
+        \end{cases}
+    \]
+    すると$\overline{f}$はモノイド準同型であり，任意の$a\in A$について$\overline{f}(a)=f(a)$をみたす．\\
+    （一意性）$g:A^*\to N$も任意の$a\in A$について$g(a)=f(a)$をみたすとすると，すべての$a_1,\ldots,a_i \in A^*$について
+    \[
+        \begin{split}
+            g(a_1\cdots a_i) &= g(a_1 * \cdots * a_i) \\
+            & = g(a_1)\cdot_N \cdots \cdot_N g(a_i)\\
+            & = f(a_1)\cdot_N \cdots \cdot_N f(a_i)\\
+            & = \overline{f}(a_1)\cdot_N \cdots \cdot_N \overline{f}(a_i) \\
+            & = \overline{f}(a_1 * \cdots * a_i) \\
+            & = \overline{f}(a_1 \cdots a_i)
+        \end{split}
+    \]
+    よって$g=\overline{f}$となり，一意性をみたす．
+
+    \begin{center}
+        \begin{tikzcd}
+            & a \in A^* \arrow[r,"\exists !\overline{f}"] & \forall N \ni \overline{f}(a) & \fbox{in $\mathbf{Mon}$} & \\ [-3.2ex]
+            |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & &|[alias=Y]| \\ [-3.2ex]
+            & a \in \,\mid M(A)\mid \arrow[r,"|f|"] & \mid N\mid \,\ni f(a) & \fbox{in $\mathbf{Sets}$} & \\
+            & a \in A \arrow[u,"i",xshift=1em] \arrow[ru,"\forall f"']
+        \end{tikzcd}
+    \end{center}
+\end{proof}
+
+\begin{prop}
+    $M,N$をモノイドとし，関数$i:A\to |M|$，$j:A\to|N|$はどちらも$A$上の自由モノイドのUMPをみたすとする．このとき，一意的なモノイド同型$h:M\cong N$\footnote{\begin{tikzcd}h:M\arrow[r,"\cong"] & N\end{tikzcd}のこと．}が存在して$|h|i=j$と$|h^{-1}|j=i$をみたす．
+\end{prop}
+
+\begin{proof}
+    $j$と$M$のUMPから$|\overline{j}|i=j$をみたす$\overline{j}:M\to N$が得られる\footnote{
+        $\left[
+                \begin{tabular}{l}
+                    \begin{tikzcd}
+                        & M \arrow[r,"\overline{j}"] & N & & \fbox{in $\mathbf{Mon}$} & \\ [-3.2ex]
+                        |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & & & |[alias=Y]| \\ [-3.2ex]
+                        & \mid M \mid \arrow[r,"|\overline{j}|"] & \mid N \mid & & \fbox{in $\mathbf{Set}$} & \\
+                        & & A \arrow[lu,"i"] \arrow[u,"j"] & & &
+                    \end{tikzcd}
+                \end{tabular}
+                \right]$
+    }．同様に$i$と$M$のUMPから$|\overline{i}|j=i$をみたす$\overline{i}:N\to M$が得られる\footnote{
+        $\left[
+                \begin{tabular}{l}
+                    \begin{tikzcd}
+                        &  & N \arrow[r,"\overline{i}"] & M & \fbox{in $\mathbf{Mon}$} & \\ [-3.2ex]
+                        |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & & & |[alias=Y]| \\ [-3.2ex]
+                        & & \mid N \mid \arrow[r,"|\overline{i}|"] & \mid M \mid & \fbox{in $\mathbf{Set}$} & \\
+                        & & A \arrow[u,"j"] \arrow[ru,"i"'] & & &
+                    \end{tikzcd}
+                \end{tabular}
+                \right]$
+    }．合成$\overline{i}\circ\overline{j}:M\to M$は$i$と$M$のUMPにより$|\overline{i}\circ\overline{j}|i=i$をみたす
+    \footnote{
+        $\left[
+                \begin{tabular}{l}
+                    \begin{tikzcd}
+                        & M \arrow[rr,bend left,"\exists !","\overline{i}\circ\overline{j}" near end] & & M & \fbox{in $\mathbf{Mon}$} & \\ [-3.2ex]
+                        |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & & & |[alias=Y]| \\
+                        & \mid M \mid \arrow[rr,"|\overline{i}\circ\overline{j}|" near end,bend left] & & \mid M \mid & \fbox{in $\mathbf{Set}$} & \\
+                        & & A \arrow[lu,"i"] \arrow[ru,"i"'] & & &
+                    \end{tikzcd}
+                \end{tabular}
+                \right]$
+    }．
+    $\mathbbm{1}_M:M\to M$も$|\mathbbm{1}_M|i=i$をみたすのでUMPの一意性より$\overline{i}\circ\overline{j}=\mathbbm{1}_M$．$M$と$N$を入れ替えれば同様に$\overline{j}\circ\overline{i}=\mathbbm{1}_N$も示せる．
+
+    \begin{center}
+        \begin{tikzcd}
+            & M \arrow[r,"\overline{j}"] \arrow[rr,bend left,"\exists !","\overline{i}\circ\overline{j}=\mathbbm{1}_M" near end] & N \arrow[r,"\overline{i}"] & M & \fbox{in $\mathbf{Mon}$} & \\ [-3.2ex]
+            |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & & & |[alias=Y]| \\
+            & \mid M \mid \arrow[r,"|\overline{j}|"] \arrow[rr,"|\overline{i}\circ\overline{j}|" near end,bend left] & \mid N \mid \arrow[r,"|\overline{i}|"] & \mid M \mid & \fbox{in $\mathbf{Set}$} & \\
+            & & A \arrow[lu,"i"] \arrow[u,"j"] \arrow[ru,"i"'] & & &
+        \end{tikzcd}
+    \end{center}
+
+\end{proof}
+
+
+（5/17講義ここまで）
+
+
+
+
+\end{document}
