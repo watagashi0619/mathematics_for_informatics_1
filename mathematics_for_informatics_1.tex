@@ -26,45 +26,23 @@
 \usepackage{bbm}
 \usepackage{ascmac}
 \usepackage{lscape}
-
 \usepackage{caption}
 \usepackage{boites}
-
 \usepackage{here}
-\usepackage{listings,jlisting}
 
-\lstset{
-    language=c,
-    frame=single,
-    basicstyle=\ttfamily\small,
-    commentstyle=\rmfamily\textit,
-    classoffset=1,
-    keywordstyle=\bfseries,
-    framesep=5pt,
-    showstringspaces=false,
-    numbers=left,
-    stepnumber=1,
-    lineskip=-0.2ex,
-    numberstyle=\tiny,
-    tabsize=2,
-    breaklines = true,
-    framexleftmargin=17pt,
-}
+%\setcounter{secnumdepth}{4}%セクションの深さレベル
 
-\setcounter{secnumdepth}{4}%セクションの深さレベル
-
-\makeatletter%subsubsubsection定義
-    \newcommand{\subsubsubsection}{\@startsection{paragraph}{4}{\z@}%
-        {1.0\Cvs \@plus.5\Cdp \@minus.2\Cdp}%
-        {.1\Cvs \@plus.3\Cdp}%
-        {\reset@font\sffamily\normalsize}
-    }
-\makeatother
+%\makeatletter%subsubsubsection定義
+%    \newcommand{\subsubsubsection}{\@startsection{paragraph}{4}{\z@}%
+%        {1.0\Cvs \@plus.5\Cdp \@minus.2\Cdp}%
+%        {.1\Cvs \@plus.3\Cdp}%
+%        {\reset@font\sffamily\normalsize}
+%    }
+%\makeatother
 
 %physicsでrotもcurlで使う
 \newcommand{\rot}{\curl}
 
-%amsthm style1,2 微分積分学B準拠
 \newtheoremstyle{mystyle1}% Name
     {}% Space above
     {}% Space below
@@ -103,18 +81,6 @@
 \newtheorem{ans}{解答}
 \newtheorem{note}{注意}
 \newtheorem{lem*}{補題}
-
-\newtheoremstyle{mystyle3}% Name
-    {}% Space above
-    {}% Space below
-    {\normalfont}% Body font
-    {}% Indent amount
-    {\bfseries\sffamily}% Theorem head font
-    {\hspace{0.5em}}% Punctuation after theorem head
-    { }% Space after theorem head, ‘ ‘, or \newline
-    {\thmname{#1}\thmnumber{#2}\thmnote{（#3）\\}}% Theorem head spec (can be left empty, meaning `normal')
-\theoremstyle{mystyle3}
-\newtheorem{qes*}[qes]{問題}
 
 %proofの後ろに黒四角をつける
 \makeatletter
@@ -183,7 +149,7 @@
                 node[#1,scale=0.8,below] {#3};
             }
     ]{#2}
-    }
+}
 
 \renewcommand{\labelenumi}{(\arabic{enumi})}%enumerateのデフォルトを(1)などにする
 \newcommand{\defLeftrightarrow}{\overset{\text{def}}{\iff}}
@@ -209,7 +175,6 @@
 \newpage
 
 \section{圏論}
-
 
 \paragraph{集合論}
 
@@ -960,7 +925,7 @@ $f:C\to D$に$f^*:D^* \to C^*$が対応する．
 
     \subsubsection{スライス圏}
 
-    \subsubsubsection{スライス圏}
+    \paragraph{スライス圏}
 
     \begin{dfn*}[スライス圏（slice category）]
         圏を$\mathcal{C}$とする．スライス圏$\blueunderline{\mathcal{C}}{圏}/\blueunderline{C}{対象}$は，
@@ -1078,7 +1043,7 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
         にうつす．
     }
 
-    \subsubsubsection{コスライス圏}
+    \paragraph{コスライス圏}
 
     \begin{dfn*}[コスライス圏（coslice category）]
         圏$\mathcal{C}$に対してコスライス圏$\blueunderline{C}{対象}/\blueunderline{\mathcal{C}}{圏}$は
