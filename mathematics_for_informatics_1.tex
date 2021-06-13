@@ -173,6 +173,7 @@
 \newcommand{\Mon}{\mathbf{Mon}}
 \newcommand{\Cat}{\mathbf{Cat}}
 \newcommand{\Graph}{\mathbf{Graph}}
+\newcommand{\Pos}{\mathbf{Pos}}
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
 
 \title{情報数学I}
@@ -1167,7 +1168,7 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 		      \end{tikzcd}
 		      この関手自体がモノイド準同型．
 		      \begin{tikzcd}
-			      N \arrow[r,mapsto,"忘却関手"] & \mid N\mid \\ [-1ex]
+			      N \arrow[r,mapsto,"忘却関手"] &  {|N|} \\ [-1ex]
 			      \Mon \arrow[u,phantom,"\rotatebox{270}{$\in$}"] \arrow[r] & \Sets \arrow[u,phantom,"\rotatebox{270}{$\in$}"] \\ [-4ex]
 			      \begin{cases}
 				      モノイド \\
@@ -1189,7 +1190,7 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 		      \begin{tikzcd}
 			      & M(A) \arrow[r,"\exists !\overline{f}"] & \forall N \arrow[dd,bend left,"忘却",blue,xshift=2.4em] & \fbox{in $\Mon$} & \\ [-3.2ex]
 			      |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & &|[alias=Y]| \\ [-3.2ex]
-			      & \mid M(A)\mid \arrow[r,"|f|"] & \mid N\mid & \fbox{in $\Sets$} & \\
+			      & {|M(A)|} \arrow[r,"|f|"] & {|N|} & \fbox{in $\Sets$} & \\
 			      & A \arrow[u,"i","\quad\circlearrowright"'] \arrow[ru,"\forall f"']
 		      \end{tikzcd}\footnotemark
 	      \end{center}
@@ -1197,14 +1198,14 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 		      \begin{tikzcd}
 			      & M(A) & \fbox{in $\Mon$} & \\ [-3.2ex]
 			      |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & &|[alias=Y]| \\ [-3.2ex]
-			      & \mid M(A)\mid & \fbox{in $\Sets$} & \\
+			      & {|M(A)|} & \fbox{in $\Sets$} & \\
 			      & A \arrow[u,"i"']
 		      \end{tikzcd}
 		      から
 		      \begin{tikzcd}
 			      & \forall N & \fbox{in $\Mon$} & \\ [-3.2ex]
 			      |[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & &|[alias=Y]| \\ [-3.2ex]
-			      &  \mid N\mid & \fbox{in $\Sets$} & \\
+			      &  {|N|} & \fbox{in $\Sets$} & \\
 			      & A \arrow[u,"\forall f"']
 		      \end{tikzcd}
 		      への射\begin{tikzcd}[column sep=1em]
@@ -1246,7 +1247,7 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 		\begin{tikzcd}
 			& a \in A^* \arrow[r,"\exists !\overline{f}"] & \forall N \ni \overline{f}(a) & \fbox{in $\Mon$} & \\ [-3.2ex]
 			|[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & &|[alias=Y]| \\ [-3.2ex]
-			& a \in \,\mid M(A)\mid \arrow[r,"|f|"] & \mid N\mid \,\ni f(a) & \fbox{in $\Sets$} & \\
+			& a \in \,{|M(A)|} \arrow[r,"|f|"] & {|N|} \,\ni f(a) & \fbox{in $\Sets$} & \\
 			& a \in A \arrow[u,"i",xshift=1em] \arrow[ru,"\forall f"']
 		\end{tikzcd}
 	\end{equation}
@@ -1263,7 +1264,7 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 					\begin{tikzcd}
 						& M \arrow[r,"\overline{j}"] & N & & \fbox{in $\Mon$} & \\ [-3.2ex]
 						|[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & & & |[alias=Y]| \\ [-3.2ex]
-						& \mid M \mid \arrow[r,"|\overline{j}|"] & \mid N \mid & & \fbox{in $\mathbf{Set}$} & \\
+						& {|M|} \arrow[r,"|\overline{j}|"] & {|N|} & & \fbox{in $\mathbf{Set}$} & \\
 						& & A \arrow[lu,"i"] \arrow[u,"j"] & & &
 					\end{tikzcd}
 				\end{tabular}
@@ -1274,7 +1275,7 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 					\begin{tikzcd}
 						&  & N \arrow[r,"\overline{i}"] & M & \fbox{in $\Mon$} & \\ [-3.2ex]
 						|[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & & & |[alias=Y]| \\ [-3.2ex]
-						& & \mid N \mid \arrow[r,"|\overline{i}|"] & \mid M \mid & \fbox{in $\mathbf{Set}$} & \\
+						& & {|N|} \arrow[r,"|\overline{i}|"] & {|M|} & \fbox{in $\mathbf{Set}$} & \\
 						& & A \arrow[u,"j"] \arrow[ru,"i"'] & & &
 					\end{tikzcd}
 				\end{tabular}
@@ -1286,7 +1287,7 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 					\begin{tikzcd}
 						& M \arrow[rr,bend left,"\exists !","\overline{i}\circ\overline{j}" near end] & & M & \fbox{in $\Mon$} & \\ [-3.2ex]
 						|[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & & & |[alias=Y]| \\
-						& \mid M \mid \arrow[rr,"|\overline{i}\circ\overline{j}|" near end,bend left] & & \mid M \mid & \fbox{in $\mathbf{Set}$} & \\
+						&  {|M|} \arrow[rr,"|\overline{i}\circ\overline{j}|" near end,bend left] & & {|M|} & \fbox{in $\mathbf{Set}$} & \\
 						& & A \arrow[lu,"i"] \arrow[ru,"i"'] & & &
 					\end{tikzcd}
 				\end{tabular}
@@ -1298,7 +1299,7 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 		\begin{tikzcd}
 			& M \arrow[r,"\overline{j}"] \arrow[rr,bend left,"\exists !","\overline{i}\circ\overline{j}=\mathbbm{1}_M" near end] & N \arrow[r,"\overline{i}"] & M & \fbox{in $\Mon$} & \\ [-3.2ex]
 			|[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & & & |[alias=Y]| \\
-			& \mid M \mid \arrow[r,"|\overline{j}|"] \arrow[rr,"|\overline{i}\circ\overline{j}|" near end,bend left] & \mid N \mid \arrow[r,"|\overline{i}|"] & \mid M \mid & \fbox{in $\mathbf{Set}$} & \\
+			& {|M|} \arrow[r,"|\overline{j}|"] \arrow[rr,"|\overline{i}\circ\overline{j}|" near end,bend left] & {|N|} \arrow[r,"|\overline{i}|"] & {|M|} & \fbox{in $\mathbf{Set}$} & \\
 			& & A \arrow[lu,"i"] \arrow[u,"j"] \arrow[ru,"i"'] & & &
 		\end{tikzcd}
 	\end{equation}
@@ -1308,8 +1309,6 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 （5/17講義ここまで）
 
 \subsubsection{自由圏}
-
-$U=|\cdot|$をforgetful functor:忘却関手，$F$をfree functor:自由(生成)関手とする．
 
 自由モノイドは
 \begin{equation}
@@ -1324,10 +1323,12 @@ $U=|\cdot|$をforgetful functor:忘却関手，$F$をfree functor:自由(生成)
 		\Cat \arrow[r,yshift=0.7ex,"U"] & [6em] \Graph \arrow[l,yshift=-0.7ex,"F"]
 	\end{tikzcd}
 \end{equation}
+ただし$U=|\cdot|$をforgetful functor:忘却関手，$F$をfree functor:自由(生成)関手とした．
 
 $U$に対してUMPを考えることによって$F$を考える．
 
-有向グラフ
+\paragraph{有向グラフ}
+
 \begin{example}[有向グラフの例]\
 	\begin{equation}
 		\begin{tikzcd}[sep=large]
@@ -1523,7 +1524,7 @@ $について，関手$h:\mathbf{C}(G)\to\mathbf{D}$で$|\overline{h}|\circ i=h$
 	\begin{tikzcd}
 		& \mathbf{C}(G) \arrow[r,"\exists !\overline{h}"] & \forall \mathbf{D} & \fbox{in $\Cat$} & \\ [-3.2ex]
 		|[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & & &|[alias=Y]| \\ [-3.2ex]
-		& \mid \mathbf{C}(G)\mid \arrow[r,"|\overline{h}|"] & \mid \mathbf{D}\mid & \fbox{in $\Graph$} & \\
+		& {|\mathbf{C}(G)|}\arrow[r,"|\overline{h}|"] & {|\mathbf{D}|} & \fbox{in $\Graph$} & \\
 		& G \arrow[u,"i","\quad\circlearrowright"'] \arrow[ru,"\forall h"']
 	\end{tikzcd}
 \end{equation}
@@ -1532,7 +1533,7 @@ $について，関手$h:\mathbf{C}(G)\to\mathbf{D}$で$|\overline{h}|\circ i=h$
 	\begin{tikzcd}
 		& \forall \mathbf{D} & \fbox{in $\Cat$} & \\ [-3.2ex]
 		|[alias=X]|\arrow[rrrr,dash,dashed,to=Y] & & &|[alias=Y]| \\ [-3.2ex]
-		&  \mid \mathbf{D}\mid & \fbox{in $\Graph$} & \\
+		&  {|\mathbf{D}|} & \fbox{in $\Graph$} & \\
 		& G \arrow[u,"\forall h"']
 	\end{tikzcd}
 }が任意に選べる部分になる．
@@ -1855,7 +1856,136 @@ UMPによる2つの関手の関連づけ(1945)，は随伴(1954)と等価にな�
 
 よって同型な対象の1つを選んで$A\times B$とよぶことにする（集合の場合と同様）．
 
-$\mathbf{Set}$でも$P$は集合として一意には決まらない．普通$A\times B=\{(a,b)\mid a\in A,b\in B\}$としているが，$a,b$を取り出す操作（元の情報を取り出すこと\footnote{直積の特徴としてはもとの情報が取り出せるというのがある．例えば行列の積などを考えると演算結果からはもとの行列の情報を取り出すことはできない．}）さえできればよいので，たとえば$(a,b)$の代わりに$(a,(a,b))$\footnote{フォン・ノイマンコーディング}，$((a,b),(a,b))$だって考えることができる．
+$\mathbf{Set}$でも$P$は集合として一意には決まらない．普通$A\times B=\{(a,b)\mid a\in A,b\in B\}$としているが，$a,b$を取り出す操作（元の情報を取り出すこと\footnote{直積の特徴としてはもとの情報が取り出せるというのがある．例えば行列の積などを考えると演算結果からはもとの行列の情報を取り出すことはできない．}）さえできればよいので，たとえば$(a,b)$の代わりに$(a,(a,b))$\footnote{フォン・ノイマンエンコーディング}，$((a,b),(a,b))$だって考えることができる．
 
 
+
+$\Set$では射$A\to B$に全射と単射があった．
+単射：$\forall a,a'\in A(f(a)=f(a')\Rightarrow a=a')$
+全射：$\forall b\in B(\exists a\in A(f(a)=b))$
+これの圏論的な対応物を知る（必ずしも一致するとは限らないことに注意．）
+
+\setcounter{dfn}{0}
+
+\begin{dfn}[エピ射とモノ射]
+	$\mathbf{C}$を圏，$f:A\to B$を$\mathbf{C}$の射とする．
+	$f$がモノモルフィズム（monomorphism,モノ射,mono）であるとは$\forall g,h:c\rightrightarrows A$について$fg=fh\Rightarrow g=h$
+	\begin{equation}
+		\begin{tikzcd}
+			C \arrow[r,yshift=0.7ex,"g"] \arrow[r,yshift=-0.7ex,"h"'] & A \arrow[r,"f"] & B
+		\end{tikzcd}
+	\end{equation}
+	エピモルフィズム（epimorphism,エピ射,epi）であるとは，$\forall i,g:B\rightrightarrows D$について$if=jf\Rightarrow i=j$
+	\begin{equation}
+		\begin{tikzcd}
+			A \arrow[r,"f"] & B \arrow[r,yshift=0.7ex,"g"] \arrow[r,yshift=-0.7ex,"h"'] & D
+		\end{tikzcd}
+	\end{equation}
+	モノ射はよく$A\rightarrowtail B$と書き，エピ射はよく$A\twoheadrightarrow B$と書く．
+\end{dfn}
+
+\begin{prop}
+	集合の間の関数$f:A\to B$がモノモルフィズムであることと$f$が単射であることは同値．
+\end{prop}
+
+\begin{proof}
+	$f:A\rightarrowtail B$とする．
+	$a,a'\in A\textrm{\,\,s.t.\,\,} a\neq a'$
+	$\{x\}$1対象集合とする．
+	$\overline{a},\overline{a'}:\{x\}\to A$
+	を$\overline{a}(x)=a,\overline{a'}(x)=a'$で定義する．
+	モノ射の条件の対遇と$a\neq a'$より$f\overline{a}\neq f\overline{a'}$．
+	よって$f(a)=(f\overline{a})(x)\neq(f\overline{a'})(x)=f(a')$
+	ゆえに$f$は単射である．
+	逆に$f$は単射とする．$g,h:C\to A$が$g\neq h$である関数とする．このときある$c\in C$について$g(c)\neq h(c)$（外延性）．$f$が単射より$f(g(c))\neq f(h(c))$．ゆえに$fg\neq fh$なのでモノ射の条件の対偶が成り立つ．
+\end{proof}
+
+よく現れる圏では単射的準同型はモノ射になることが多い．
+
+\begin{ex}[$\Mon$]
+	モノイド準同型$h:M\to N$がモノ射であれば台関数$|h|:|M|\to|N|$もモノ射，すなわち単射である．逆も成り立つ．
+\end{ex}
+
+\begin{proof}
+	$h$をモノ射とし，$|=\{*\}$を1対象集合，$x,y:1\to|M|$であって$x(*)\neq y(*)$であるものとする（$|M|$の"要素"）．
+	自由モノイド$M(1)$のUMPより，異なる準同型$\overline{x},\overline{y}:M(1)\to M$が存在し，$h$がモノ射であることより，以下の合成は異なる．
+	\[
+		h\circ \overline{x},h\circ \overline{y}:M(1)\to M\to N
+	\]
+	よって対応する$|N|$の"要素"も異なる．
+	\[
+		\begin{tikzcd}
+			M(1) \arrow[r,yshift=0.7ex,"\overline{x}"] \arrow[r,yshift=-0.7ex,"\overline{y}"'] & M \arrow[r,"h"] & N \\
+			1 \arrow[r,yshift=0.7ex,"x"] \arrow[r,yshift=-0.7ex,"y"'] & {|M|} \arrow[r,"{|h|}"] & {|N|}
+		\end{tikzcd}
+	\]
+
+	逆に$|h|:|M|\to |N|$がモノ射
+	$f,g:X\to M$が異なる準同型のとき（$f\neq g$），$|f|,|g|:|X|\to|M|$は異なる関数であり，$|h|$がモノ射なので$|h|\circ|f|,|h|\circ g:|X|\to |M|\to |N|$も異なる関数である．
+	よって$|h\circ f|=|h|\circ |f|\neq |h|\circ |g|=|h\circ g|$なので$h\circ f\neq h\circ g$．よって$h$はモノ射．
+\end{proof}
+
+双対的に$\Set$ではエピ射は全射である．しかしよく現れる圏ではエピ射は全射的準同型でないことが多い．
+
+\begin{ex}
+	$\Mon$においてモノ射$\mathbf{N}\rightarrowtail \mathbf{Z}$を考える．ただし$\mathbf{N}=(N,+,0)$，$\mathbf{Z}=(Z,+,0)$．このモノ射は台関数として包含写像$N\hookrightarrow Z$をもつ（$\Set$のエピ射でない）がこれは$\Mon$においてエピ射である．
+\end{ex}
+
+\begin{proof}
+	モノイド準同型$f,g:(\mathbf{Z},+,0)\to(M,*,u)$で$f|_N=g|_N$ならば$f=g$をみたす．
+	\[
+		f(-n)=f((-1)_1+(-1)_2+\cdots +(-1)_n)=f(-1)_1*f(-1)_2*\cdots *f(-1)_n
+	\]
+	であり$g$も同様であることにして注意すると
+	\[
+		\begin{split}
+			f(-1)
+			&=f(-1)*u \\
+			&=f(-1)*g(0) \\
+			&=f(-1)*g(1-1) \\
+			&=f(-1)*g(1)*g(-1) \\
+			&=f(-1)*f(1)*g(-1) \\
+			&=f(-1+1)*g(-1) \\
+			&=f(0)*g(-1) \\
+			&=u*g(-1) \\
+			&=g(-1)
+		\end{split}
+	\]
+\end{proof}
+
+\begin{prop}
+	同型射はモノ射かつエピ射である．
+\end{prop}
+
+\begin{proof}
+	\begin{equation}
+		\begin{tikzcd}
+			A \arrow[r,yshift=0.7ex,"x"] \arrow[r,yshift=-0.7ex,"y"'] & B \arrow[r,"m"] \arrow[rd,"\mathbbm{1}"] & C \arrow[d,"e"] & \\
+			& & B \arrow[r,yshift=0.7ex,"u"] \arrow[r,yshift=-0.7ex,"v"'] & D
+		\end{tikzcd}
+	\end{equation}
+	$m$が同型射で逆射$e$をもつとき，$mx=my$ならば$x=emx=emy=y$．よって$m$はモノ射．
+	同様に$e$は同型射であり逆射$m$をもつとき$ue=ve$ならば$u=uem=vem=v$．よって$r$はエピ射
+\end{proof}
+
+\subsubsection{セクションとレトラクション}
+
+より一般的に$f:A\to B$が左逆射$g:B\to A,gf=\mathbbm{1}_A$をもつとき，$f$はモノ射で$g$はエピ射であることも同様の議論で示せる．
+
+\begin{dfn}[分裂モノ射（split mono），分裂エピ射（split epi），セクション，レトラクション]
+	分裂モノ射は左逆射をもつ射である．
+	分裂エピ射は右逆射をもつ射である．
+	射$e:X\to A$と$s:A\to X$が$es=\mathbbm{1}_A$をみたすとき$s$は$e$のセクションもしくはsplitingと呼ばれ，$e$は$s$のレトラクションと呼ばれる．対象$A$は$X$のレトラクトと呼ばれる．
+\end{dfn}
+
+\subsection{Generalized Element}
+
+任意の集合$X$について
+
+$1=\{*\}$は$\Set$の終対象．すなわち集合$X$の要素$x$は$\overline{x}$と同型により同一視できる．
+これを一般化して終対象$1$をもつ任意の圏において射$1\to A$は$A$のglobal element,point,constantと呼ばれる．
+$\Set,\Pos,\mathbf{Top}$では
+$f,g:A\to B$について任意のpoint$a:1\to A$との合成が$fa=ga$ならば$f=g$．よって射はドメインのpointで決まる．
+しかし常にこれが成り立つわけではない．より一般的に任意の圏においてgeneralized elementという概念を導入しよう．
+対象$A$のgeneralized elementとは射$X\to A$である（$X$は任意のtest object）．
 \end{document}
