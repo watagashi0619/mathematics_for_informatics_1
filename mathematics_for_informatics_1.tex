@@ -187,6 +187,10 @@
 \newcommand{\Pos}{\mathbf{Pos}}
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
 
+\def\startpoint#1{
+    {\hfill\rlap{{$\overline{\tt{#1}\ \downarrow\ }$}}}\vspace{-1.5\baselineskip}
+}
+
 \title{情報数学I}
 \author{担当：三好}
 %\date{}%コメントアウトした状態だと今日の日付が入る
@@ -708,6 +712,10 @@ $\mathcal{U}$がユニバースならば次が成り立つ（証明略）：
 
 この講義では関数，関係などの再定義が不要であるため，方法2を採用することにする．（圏論的モデル論など集合論と圏論の両方が関わる分野ではもう少し慎重になる必要がある．）
 
+% 4/26 ここから ----------
+
+\startpoint{4/26(第3回)}
+
 \setcounter{subsection}{4}
 
 \subsection{同型性}
@@ -837,6 +845,10 @@ $\mathcal{U}$がユニバースならば次が成り立つ（証明略）：
 		\item すべての圏が対象として集合，射として関数であるわけではない．一方で（サイズが適切なら）そのような圏と同型である．したがって，具体圏（concrete category）を集合と関数の圏に制限するのは適切ではない（Awodeyの立場）
 		\item $\mathcal{C}\to\mathbf{Set}$という忠実関手を具体圏とするよく見られる立場に疑問を呈している（Chapter2とのつながりを意識している）
 	\end{itemize}
+
+	% 5/10 ここから ----------
+
+	\startpoint{5/10(第4回)}
 
 	\subsection{圏の構成}
 
@@ -1124,6 +1136,10 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 \end{center}
 したがって，コスライス圏$C/\mathcal{C}$はスライス圏$\mathcal{C}^{\textrm{op}}/C$と考えても同じである．
 
+% 5/17 ここから ----------
+
+\startpoint{5/17(第5回)}
+
 \subsection{自由(生成)圏（free category）}
 
 \subsubsection{自由モノイド}
@@ -1317,7 +1333,7 @@ $\mathcal{C}$の射$g:C\to D$について，その射との合成を用いて関
 
 \end{proof}
 
-（5/17講義ここまで）
+\startpoint{5/24(第6回)}
 
 \subsubsection{自由圏}
 
@@ -1590,9 +1606,11 @@ $について，関手$h:\mathbf{C}(G)\to\mathbf{D}$で$|\overline{h}|\circ i=h$
 UMPによる2つの関手の関連づけ(1945)，は随伴(1954)と等価になっている（圏論における重要な考え方の1つ）．
 数学的にはUMPが使いやすいがコンピュータサイエンス（プログラム意味論）的な観点では随伴が使いやすい．
 
-（第6回ここまで）
+忘却関手からUMPによって考えられる圏の例をみていく．UMPを用いたものはup to isoである．\\
 
-忘却関手からUMPによって考えられる圏の例をみていく．UMPを用いたものはup to isoである．
+% 5/31 ここから ----------
+
+\startpoint{5/31(第7回)}
 
 \subparagraph{\underline{UMPの一般的な形式}}\footnote{ここで参考文献を挙げていた}
 
@@ -1870,6 +1888,7 @@ UMPによる2つの関手の関連づけ(1945)，は随伴(1954)と等価にな�
 $\mathbf{Set}$でも$P$は集合として一意には決まらない．普通$A\times B=\{(a,b)\mid a\in A,b\in B\}$としているが，$a,b$を取り出す操作（元の情報を取り出すこと\footnote{直積の特徴としてはもとの情報が取り出せるというのがある．例えば行列の積などを考えると演算結果からはもとの行列の情報を取り出すことはできない．}）さえできればよいので，たとえば$(a,b)$の代わりに$(a,(a,b))$\footnote{フォン・ノイマンエンコーディング}，$((a,b),(a,b))$だって考えることができる．
 
 % 6/7 ここから-----
+\startpoint{6/7(第8回)}
 
 $\Set$では射$A\to B$に全射と単射があった．
 \begin{itemize}
@@ -2092,7 +2111,9 @@ $f,g:A\to B$について任意のpoint\,$a:1\to A$との合成が$fa=ga$なら�
 しかし常にこれが成り立つわけではない．より一般的に任意の圏においてgeneralized elementという概念を導入しよう．
 対象$A$のgeneralized element（一般化要素）とは射$X\to A$である（$X$は任意のtest object）\footnote{この$X$には終対象であるといった条件はなく，任意である．test objectなどという．}．
 
-%6/14ここから -----------
+% 6/14 ここから -----------
+
+\startpoint{6/14(第9回)}
 
 \subsection{積をもつ圏}
 
@@ -2309,7 +2330,8 @@ $g\in\mathbf{C}$を動かした時に射が定まる各オブジェクトごと�
 	という射$\langle F(p_1),F(p_2) \rangle$を構成できるという意味で定められた同型である．
 \end{dfn}
 
-% 6/21 ここから ---
+% 6/21 ここから ----------
+\startpoint{6/21(第10回)}
 
 \section{双対性}
 
